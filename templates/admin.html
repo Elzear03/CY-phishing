@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body { padding: 2rem; background-color: #f8f9fa; }
+    h1, h2 { margin-bottom: 1rem; }
+    table { background: white; }
+    th { background-color: #343a40; color: white; }
+    td, th { vertical-align: middle !important; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mb-4">Administration</h1>
+    <a class="btn btn-secondary mt-3" href="{{ url_for('index') }}">Retour</a>
+
+    <h2>Cibles</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr><th>Hash</th><th>Prénom</th><th>Nom</th><th>Email</th><th>Créé</th></tr>
+        </thead>
+        <tbody>
+        {% for h, f, l, e, t in targets %}
+        <tr>
+            <td><code>{{ h }}</code></td>
+            <td>{{ f or '-' }}</td>
+            <td>{{ l or '-' }}</td>
+            <td>{{ e or '-' }}</td>
+            <td>{{ t or '-' }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Clicks</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr><th>Hash</th><th>Prénom</th><th>Nom</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+        {% for h, f, l, ts in clicks %}
+        <tr>
+            <td><code>{{ h }}</code></td>
+            <td>{{ f or '-' }}</td>
+            <td>{{ l or '-' }}</td>
+            <td>{{ ts or '-' }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Soumissions</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr><th>Hash</th><th>Prénom</th><th>Nom</th><th>Username</th><th>Password</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+        {% for h, firstname, lastname, user_masked, pass_masked, submit_ts in submissions %}
+        <tr>
+            <td><code>{{ h }}</code></td>
+            <td>{{ firstname or '-' }}</td>
+            <td>{{ lastname or '-' }}</td>
+            <td>{{ user_masked or '-' }}</td>
+            <td>{{ pass_masked or '-' }}</td>
+            <td>{{ submit_ts or '-' }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<h2>Executions</h2>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr><th>Hash</th><th>Prénom</th><th>Nom</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+    {% for h, f, l, ts in executions %}
+    <tr>
+        <td><code>{{ h }}</code></td>
+        <td>{{ f or '-' }}</td>
+        <td>{{ l or '-' }}</td>
+        <td>{{ ts or '-' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<form action="{{ url_for('clear_data') }}" method="post" class="mb-3">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer toutes les données ?')">
+        Nettoyer toutes les données
+    </button>
+</form>
+
+
+</div>
+</body>
+</html>
